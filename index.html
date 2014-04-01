@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+    <meta name="description" content="A web-app designed to help Natal Resucitation Care">
+    <meta name="author" content="The Quick Brown Fox Inc.">
+    <link rel="shortcut icon" href="favicon.png">
       
-      <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <title>NRP App</title>
 
@@ -21,7 +21,6 @@
     <!-- Custom styles for this template -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -37,125 +36,8 @@
       }
       </style>
       
-      <script>
-        var count=31.00;
-        var counter=setInterval(timer, 1000); //1000 will run it every 1 second
-        var NRPDepth = 0;
-        var paused = 0;
-          
-        function timer()
-        {
-          count=count-1;
-          if (count <= 0)
-          {
-             clearInterval(counter);
-             //counter ended, do something here
-//              document.getElementsByTagName("p")[0].innerHTML = "Too much time has passed. Seek medical attention!";
-              alert("Too much time has passed. Seek medical attention!");
-             return;
-          }
-          document.getElementById("timer").innerHTML=count + "s";
-        }
-          
-      function yes() {
-          
-          if (NRPDepth == 0) {
-            finish();
-          } else if (NRPDepth == 2) {
-            clearInterval(counter);
-            document.getElementsByTagName("p")[0].innerHTML = "Clear airway SPO<sub>2</sub> monitoring; Consider CPAP.";
-            document.getElementsByTagName("p")[1].innerHTML = "";
-            pauseTimer();
-          } else if (NRPDepth == 1) {
-            NRPDepth = NRPDepth+3;
-            document.getElementsByTagName("p")[0].innerHTML = "PPV, SPO<sub>2</sub> monitoring.";
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 100 bpm?";
-            resetTimer();
-          } else if (NRPDepth == 4) {
-            NRPDepth = NRPDepth+1;
-            document.getElementsByTagName("p")[0].innerHTML = "Take ventillation corrective steps.";
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 60 bpm?";
-            resetTimer();
-          } else if (NRPDepth == 5) {
-            NRPDepth = NRPDepth+1;
-            document.getElementsByTagName("p")[0].innerHTML = "Consider incubation; Chest compressions; coordinate with PPV";
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 60 bpm?";
-            resetTimer();
-          } else if (NRPDepth == 6) {
-            NRPDepth = NRPDepth + 1;
-            document.getElementsByTagName("p")[0].innerHTML = "IV epinephrine.";
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 60 bpm?";
-            resetTimer();
-          } else if (NRPDepth > 6) {
-            document.getElementsByTagName("p")[0].innerHTML = "Continue adminstering IV epinephrine.";
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 60 bpm?";
-            resetTimer();
-          }
-      }
-          
-      function no() {
-          
-          if (NRPDepth == 0) {
-            NRPDepth = NRPDepth+1;
-            document.getElementsByTagName("p")[0].innerHTML = "Warm, clear airway if necessary, dry, stimulate.";
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 100 bpm, gasping, or apnea?";
-            resetTimer();
-          } else if (NRPDepth == 1) {
-            NRPDepth = NRPDepth+1;
-            document.getElementsByTagName("p")[0].innerHTML = "Labored Breathing or persistent cyanosis?";
-            document.getElementsByTagName("p")[1].innerHTML = "";
-            resetTimer();
-          } else if (NRPDepth == 2) {
-            finish();
-          } else if (NRPDepth == 4) {
-            finish();
-          } else if (NRPDepth == 5) {
-            NRPDepth = NRPDepth - 1;
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 100 bpm?";
-            document.getElementsByTagName("p")[0].innerHTML = "PPV, SPO<sub>2</sub> monitoring.";
-            resetTimer();
-          } else if (NRPDepth == 6) {
-            NRPDepth = NRPDepth - 1;
-            document.getElementsByTagName("p")[1].innerHTML = "HR below 100 bpm?";
-            document.getElementsByTagName("p")[0].innerHTML = "PPV, SPO<sub>2</sub> monitoring.";
-            resetTimer();
-          } 
-      }
-          
-          function resetTimer() {
-              clearInterval(counter);
-              count = 31.00;
-              counter=setInterval(timer, 1000);
-              timer();
-          }
-          
-          function finish() {
-            clearInterval(counter);
-            document.getElementsByTagName("p")[0].innerHTML = "";
-            document.getElementsByTagName("p")[1].innerHTML = "Okay, looks good - continue monitoring.";
-          }
-          
-          function pauseTimer() {
-              if (paused == 0) {
-                clearInterval(counter);
-                  paused = 1;
-              } else if (paused == 1) {
-                  playTimer();
-                  paused = 0;
-              }
-          }
-          
-          function playTimer() {
-              counter=setInterval(timer, 1000);
-              timer();
-          }
-          
-          function restartAll() {
-              window.location.reload( true );   
-          }
-          
-          
-      </script>
+      <script src="js/main.js"></script>
+      
   </head>
 
   <body role="document">
@@ -170,36 +52,31 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">NRP Assistant</a>
+          <a class="navbar-brand" href="#" onClick="restartAll()">NRP Assistant</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="#" onClick="pauseTimer()"><i class="fa fa-play"></i><i class="fa fa-pause"></i> Play/Pause Timer</a></li>
             <li><a href="#" onClick="restartAll()"><i class="fa fa-refresh"></i> Restart</a></li>
-<!--
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Restart</a></li>
-              </ul>
-            </li>
--->
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
 
     <div class="container theme-showcase" role="main">
 <br><br><br>
-      <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>NRP Assistant</h1>
         <p id="nrplevel">Term Gestation, Breathing or Crying? Good tone?</p>
+<!--          <p id="nrplevel">This app is meant to help you with Post Natal Resucitation care.</p>-->
           
           <span id="timer" text=""></span>
           <p id="message" text=""></p>
           
-          <br><br><br>
+          <table width="100%">
+          <td></td></table>
+          
+          <br><br>
           <table width="100%">
         <td><a href="#" class="btn btn-success btn-lg" role="button" onclick="yes()"><i class="fa fa-check-circle"></i> Yes</a></td>
           <td><a href="#" class="btn btn-danger btn-lg" role="button" onclick="no()"><i class="fa fa-times-circle"></i> No</a></td>
