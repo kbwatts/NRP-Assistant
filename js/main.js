@@ -49,13 +49,13 @@ function resetTimerToOneMinute() {
 // regardless of 'yes' or 'no' text
 function swapButtons() {
     if (buttonState) {
-    document.getElementsByTagName("td")[1].innerHTML = "<a href='#' class='btn btn-success btn-lg' role='button' onclick='yes()'><i class='fa fa-check-circle'></i> Yes</a>";
-    document.getElementsByTagName("td")[2].innerHTML = "<a href='#' class='btn btn-danger btn-lg' role='button' onclick='no()'><i class='fa fa-times-circle'></i> No</a>";
-    buttonState = !buttonState;
+        document.getElementsByTagName("td")[1].innerHTML = "<a href='#' class='btn btn-success btn-lg' role='button' onclick='yes()'><i class='fa fa-check-circle'></i> Yes</a>";
+        document.getElementsByTagName("td")[2].innerHTML = "<a href='#' class='btn btn-danger btn-lg' role='button' onclick='no()'><i class='fa fa-times-circle'></i> No</a>";
+        buttonState = !buttonState;
     } else if (!buttonState) {
-    document.getElementsByTagName("td")[1].innerHTML = "<a href='#' class='btn btn-success btn-lg' role='button' onclick='no()'><i class='fa fa-check-circle'></i> No</a>";
-    document.getElementsByTagName("td")[2].innerHTML = "<a href='#' class='btn btn-danger btn-lg' role='button' onclick='yes()'><i class='fa fa-times-circle'></i> Yes</a>";
-    buttonState = !buttonState;
+        document.getElementsByTagName("td")[1].innerHTML = "<a href='#' class='btn btn-success btn-lg' role='button' onclick='no()'><i class='fa fa-check-circle'></i> No</a>";
+        document.getElementsByTagName("td")[2].innerHTML = "<a href='#' class='btn btn-danger btn-lg' role='button' onclick='yes()'><i class='fa fa-times-circle'></i> Yes</a>";
+        buttonState = !buttonState;
     }
 }
 
@@ -107,26 +107,26 @@ function pauseTimer() {
 }
 
 function goodFinish() {
-        clearInterval(counter);
-        updateTitle("Okay, Good!");
-        updatePrompt("");
-        updateInstruction("Routine care; provide warmth; clear airway if necessary; dry; ongoing evaluation");
-        removeButtons();
+    clearInterval(counter);
+    updateTitle("Okay, Good!");
+    updatePrompt("");
+    updateInstruction("Routine care; provide warmth; clear airway if necessary; dry; ongoing evaluation");
+    removeButtons();
 }
 
 function warningFinish() {
-        updateTitle("Requires specialised care.");
-        updatePrompt("Please consult a specialist.");
-        pauseTimer();
-        removeButtons();
+    updateTitle("Requires specialised care.");
+    updatePrompt("Please consult a specialist.");
+    pauseTimer();
+    removeButtons();
 }
 
 function alternateFinish() {
-        updateTitle("Clear Airway; SPO<sub>2</sub> monitoring; consider CPAP.");
-        updateInstruction("Gradually decrease PPV, move baby to for post-recucitation care.");
-        updatePrompt("");
-        pauseTimer();
-        removeButtons();
+    updateTitle("Clear Airway; SPO<sub>2</sub> monitoring; consider CPAP.");
+    updateInstruction("Gradually decrease PPV, move baby to for post-recucitation care.");
+    updatePrompt("");
+    pauseTimer();
+    removeButtons();
 }
 
 // reloads the page, effectively restarting the program.
@@ -134,6 +134,7 @@ function restartAll() {
     window.location.reload(true);
 }
 
+// YES
 // if user clicks 'yes', change the current view according to previous state.
 function yes() {
 
@@ -171,32 +172,27 @@ function yes() {
         plusOne();
         resetTimerToOneMinute();
         updateTitle("Initiate umbilical IV access");
-        updateInstruction("IV Epinephrine (1:10,000) continue PPV (O2 @ 100%) + chest compressions");
+        updateInstruction("IV Epinephrine (1:10,000) continue PPV (O<sub>2</sub> @ 100%) + chest compressions");
         updatePrompt("HR still below 60bpm?");
     } else if (NRPDepth === 8) {
-        minusTwo();
+        plusOne();
         resetTimer();
-        updateTitle("Take ventilation corrective steps.");
-        updateInstruction("");
-        updatePrompt("HR Below 60bpm?");
+        updateTitle("Repeat dose every 3-5 minutes");
+        updateInstruction("Continue PPV, (0<sub>2</sub> @100% + Chest compressions");
+        updatePrompt("HR still below 60bpm again?");
         resetTimer();
     } else if (NRPDepth === 9) {
         plusOne();
         resetTimer();
-        updateTitle("Continue PPV (O2 @ 100%) + chest compressions");
-        updateInstruction("Repeat dose every 3-5 minutes.");
+        updateTitle("Consider hypovolemia or pneumothorax");
+        updateInstruction("Oxymeter; Stop chest compressions when HR >60");
         updatePrompt("HR still below 60bpm again?");
     } else if (NRPDepth === 10) {
-        plusOne();
-        resetTimer();
-        updateTitle("Consider hypovolemia or pneumothorax; Oxymeter;");
-        updateInstruction(" stop chest compressions when HR >60");
-        updatePrompt("HR still below 60bpm again?");
-    } else if (NRPDepth === 11) {
         warningFinish();
     }
 }
 
+// NO
 // if user clicks 'no', change the current view according to previous state.
 function no() {
 
@@ -231,7 +227,7 @@ function no() {
     } else if (NRPDepth === 6) {
         alternateFinish();
     } else if (NRPDepth === 7) {
-        plusOne();
+        minusOne();
         updateTitle("HR below 100bpm?");
         updateInstruction("");
         updatePrompt("");
@@ -239,10 +235,6 @@ function no() {
     } else if (NRPDepth === 8) {
         alternateFinish();
     } else if (NRPDepth === 9) {
-        alternateFinish();
-    } else if (NRPDepth === 10) {
-        alternateFinish();
-    } else if (NRPDepth === 11) {
         alternateFinish();
     }
 }
